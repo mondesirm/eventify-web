@@ -1,0 +1,662 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Category {
+  createdAt: DateTime!
+  events(orderBy: [EventOrderByInput!], skip: Float, take: Float, where: EventWhereInput): [Event!]!
+  icon: String!
+  id: String!
+  name: String!
+  places(orderBy: [PlaceOrderByInput!], skip: Float, take: Float, where: PlaceWhereInput): [Place!]!
+  updatedAt: DateTime!
+}
+
+input CategoryCreateInput {
+  events: EventCreateNestedManyWithoutCategoriesInput
+  icon: String!
+  name: String!
+  places: PlaceCreateNestedManyWithoutCategoriesInput
+}
+
+input CategoryOrderByInput {
+  createdAt: SortOrder
+  icon: SortOrder
+  id: SortOrder
+  name: SortOrder
+  updatedAt: SortOrder
+}
+
+input CategoryUpdateInput {
+  events: EventUpdateManyWithoutCategoriesInput
+  icon: String
+  name: String
+  places: PlaceUpdateManyWithoutCategoriesInput
+}
+
+input CategoryWhereInput {
+  events: EventListRelationFilter
+  icon: StringFilter
+  id: StringFilter
+  name: StringFilter
+  places: PlaceListRelationFilter
+}
+
+input CategoryWhereUniqueInput {
+  id: String!
+}
+
+input Credentials {
+  password: String!
+  username: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input DateTimeFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: DateTime
+  notIn: [DateTime!]
+}
+
+enum EnumEventVisibility {
+  Friends
+  Public
+  Unlisted
+}
+
+enum EnumInvitationKind {
+  EventAttendance
+  FriendRequest
+}
+
+type Event {
+  attendees(orderBy: [UserOrderByInput!], skip: Float, take: Float, where: UserWhereInput): [User!]!
+  category: Category
+  createdAt: DateTime!
+  date: DateTime!
+  description: String
+  id: String!
+  invitations(orderBy: [InvitationOrderByInput!], skip: Float, take: Float, where: InvitationWhereInput): [Invitation!]!
+  limit: Float!
+  owner: User
+  place: Place
+  title: String!
+  updatedAt: DateTime!
+  visibility: EnumEventVisibility
+}
+
+input EventCreateInput {
+  attendees: UserCreateNestedManyWithoutEventsInput
+  category: CategoryWhereUniqueInput!
+  date: DateTime!
+  description: String
+  invitations: InvitationCreateNestedManyWithoutEventsInput
+  limit: Float!
+  owner: UserWhereUniqueInput!
+  place: PlaceWhereUniqueInput
+  title: String!
+  visibility: EnumEventVisibility!
+}
+
+input EventCreateNestedManyWithoutCategoriesInput {
+  connect: [EventWhereUniqueInput!]
+}
+
+input EventCreateNestedManyWithoutPlacesInput {
+  connect: [EventWhereUniqueInput!]
+}
+
+input EventCreateNestedManyWithoutUsersInput {
+  connect: [EventWhereUniqueInput!]
+}
+
+input EventListRelationFilter {
+  every: EventWhereInput
+  none: EventWhereInput
+  some: EventWhereInput
+}
+
+input EventOrderByInput {
+  categoryId: SortOrder
+  createdAt: SortOrder
+  date: SortOrder
+  description: SortOrder
+  id: SortOrder
+  limit: SortOrder
+  ownerId: SortOrder
+  placeId: SortOrder
+  title: SortOrder
+  updatedAt: SortOrder
+  visibility: SortOrder
+}
+
+input EventUpdateInput {
+  attendees: UserUpdateManyWithoutEventsInput
+  category: CategoryWhereUniqueInput
+  date: DateTime
+  description: String
+  invitations: InvitationUpdateManyWithoutEventsInput
+  limit: Float
+  owner: UserWhereUniqueInput
+  place: PlaceWhereUniqueInput
+  title: String
+  visibility: EnumEventVisibility
+}
+
+input EventUpdateManyWithoutCategoriesInput {
+  connect: [EventWhereUniqueInput!]
+  disconnect: [EventWhereUniqueInput!]
+  set: [EventWhereUniqueInput!]
+}
+
+input EventUpdateManyWithoutPlacesInput {
+  connect: [EventWhereUniqueInput!]
+  disconnect: [EventWhereUniqueInput!]
+  set: [EventWhereUniqueInput!]
+}
+
+input EventUpdateManyWithoutUsersInput {
+  connect: [EventWhereUniqueInput!]
+  disconnect: [EventWhereUniqueInput!]
+  set: [EventWhereUniqueInput!]
+}
+
+input EventWhereInput {
+  attendees: UserListRelationFilter
+  category: CategoryWhereUniqueInput
+  createdAt: DateTimeFilter
+  date: DateTimeFilter
+  description: StringNullableFilter
+  id: StringFilter
+  invitations: InvitationListRelationFilter
+  limit: IntFilter
+  owner: UserWhereUniqueInput
+  place: PlaceWhereUniqueInput
+  title: StringFilter
+  updatedAt: DateTimeFilter
+  visibility: EnumEventVisibility
+}
+
+input EventWhereUniqueInput {
+  id: String!
+}
+
+input FloatFilter {
+  equals: Float
+  gt: Float
+  gte: Float
+  in: [Float!]
+  lt: Float
+  lte: Float
+  not: Float
+  notIn: [Float!]
+}
+
+input IntFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: Int
+  notIn: [Int!]
+}
+
+type Invitation {
+  createdAt: DateTime!
+  event: Event
+  id: String!
+  kind: EnumInvitationKind
+  recipient: User
+  sender: User
+  updatedAt: DateTime!
+}
+
+input InvitationCreateInput {
+  event: EventWhereUniqueInput
+  kind: EnumInvitationKind!
+  recipient: UserWhereUniqueInput!
+  sender: UserWhereUniqueInput!
+}
+
+input InvitationCreateNestedManyWithoutEventsInput {
+  connect: [InvitationWhereUniqueInput!]
+}
+
+input InvitationCreateNestedManyWithoutUsersInput {
+  connect: [InvitationWhereUniqueInput!]
+}
+
+input InvitationListRelationFilter {
+  every: InvitationWhereInput
+  none: InvitationWhereInput
+  some: InvitationWhereInput
+}
+
+input InvitationOrderByInput {
+  createdAt: SortOrder
+  eventId: SortOrder
+  id: SortOrder
+  kind: SortOrder
+  recipientId: SortOrder
+  senderId: SortOrder
+  updatedAt: SortOrder
+}
+
+input InvitationUpdateInput {
+  event: EventWhereUniqueInput
+  kind: EnumInvitationKind
+  recipient: UserWhereUniqueInput
+  sender: UserWhereUniqueInput
+}
+
+input InvitationUpdateManyWithoutEventsInput {
+  connect: [InvitationWhereUniqueInput!]
+  disconnect: [InvitationWhereUniqueInput!]
+  set: [InvitationWhereUniqueInput!]
+}
+
+input InvitationUpdateManyWithoutUsersInput {
+  connect: [InvitationWhereUniqueInput!]
+  disconnect: [InvitationWhereUniqueInput!]
+  set: [InvitationWhereUniqueInput!]
+}
+
+input InvitationWhereInput {
+  createdAt: DateTimeFilter
+  event: EventWhereUniqueInput
+  id: StringFilter
+  kind: EnumInvitationKind
+  recipient: UserWhereUniqueInput
+  sender: UserWhereUniqueInput
+  updatedAt: DateTimeFilter
+}
+
+input InvitationWhereUniqueInput {
+  id: String!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
+type MetaQueryPayload {
+  count: Float!
+}
+
+type Mutation {
+  createCategory(data: CategoryCreateInput!): Category!
+  createEvent(data: EventCreateInput!): Event!
+  createInvitation(data: InvitationCreateInput!): Invitation!
+  createPlace(data: PlaceCreateInput!): Place!
+  createPosition(data: PositionCreateInput!): Position!
+  createTrip(data: TripCreateInput!): Trip!
+  createUser(data: UserCreateInput!): User!
+  deleteCategory(where: CategoryWhereUniqueInput!): Category!
+  deleteEvent(where: EventWhereUniqueInput!): Event!
+  deleteInvitation(where: InvitationWhereUniqueInput!): Invitation!
+  deletePlace(where: PlaceWhereUniqueInput!): Place!
+  deletePosition(where: PositionWhereUniqueInput!): Position!
+  deleteTrip(where: TripWhereUniqueInput!): Trip!
+  deleteUser(where: UserWhereUniqueInput!): User!
+  login(credentials: Credentials!): UserInfo!
+  updateCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category!
+  updateEvent(data: EventUpdateInput!, where: EventWhereUniqueInput!): Event!
+  updateInvitation(data: InvitationUpdateInput!, where: InvitationWhereUniqueInput!): Invitation!
+  updatePlace(data: PlaceUpdateInput!, where: PlaceWhereUniqueInput!): Place!
+  updatePosition(data: PositionUpdateInput!, where: PositionWhereUniqueInput!): Position!
+  updateTrip(data: TripUpdateInput!, where: TripWhereUniqueInput!): Trip!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
+}
+
+type Place {
+  category: Category
+  createdAt: DateTime!
+  events(orderBy: [EventOrderByInput!], skip: Float, take: Float, where: EventWhereInput): [Event!]!
+  id: String!
+  name: String!
+  price: Float!
+  rating: Float!
+  updatedAt: DateTime!
+  uri: String
+}
+
+input PlaceCreateInput {
+  category: CategoryWhereUniqueInput!
+  events: EventCreateNestedManyWithoutPlacesInput
+  name: String!
+  price: Float!
+  rating: Float!
+  uri: String
+}
+
+input PlaceCreateNestedManyWithoutCategoriesInput {
+  connect: [PlaceWhereUniqueInput!]
+}
+
+input PlaceListRelationFilter {
+  every: PlaceWhereInput
+  none: PlaceWhereInput
+  some: PlaceWhereInput
+}
+
+input PlaceOrderByInput {
+  categoryId: SortOrder
+  createdAt: SortOrder
+  id: SortOrder
+  name: SortOrder
+  price: SortOrder
+  rating: SortOrder
+  updatedAt: SortOrder
+  uri: SortOrder
+}
+
+input PlaceUpdateInput {
+  category: CategoryWhereUniqueInput
+  events: EventUpdateManyWithoutPlacesInput
+  name: String
+  price: Float
+  rating: Float
+  uri: String
+}
+
+input PlaceUpdateManyWithoutCategoriesInput {
+  connect: [PlaceWhereUniqueInput!]
+  disconnect: [PlaceWhereUniqueInput!]
+  set: [PlaceWhereUniqueInput!]
+}
+
+input PlaceWhereInput {
+  category: CategoryWhereUniqueInput
+  createdAt: DateTimeFilter
+  events: EventListRelationFilter
+  id: StringFilter
+  name: StringFilter
+  price: FloatFilter
+  rating: IntFilter
+  updatedAt: DateTimeFilter
+  uri: StringNullableFilter
+}
+
+input PlaceWhereUniqueInput {
+  id: String!
+}
+
+type Position {
+  coordinates: String!
+  createdAt: DateTime!
+  id: String!
+  trip: Trip
+  updatedAt: DateTime!
+}
+
+input PositionCreateInput {
+  coordinates: String!
+  trip: TripWhereUniqueInput
+}
+
+input PositionCreateNestedManyWithoutTripsInput {
+  connect: [PositionWhereUniqueInput!]
+}
+
+input PositionListRelationFilter {
+  every: PositionWhereInput
+  none: PositionWhereInput
+  some: PositionWhereInput
+}
+
+input PositionOrderByInput {
+  coordinates: SortOrder
+  createdAt: SortOrder
+  id: SortOrder
+  tripId: SortOrder
+  updatedAt: SortOrder
+}
+
+input PositionUpdateInput {
+  coordinates: String
+  trip: TripWhereUniqueInput
+}
+
+input PositionUpdateManyWithoutTripsInput {
+  connect: [PositionWhereUniqueInput!]
+  disconnect: [PositionWhereUniqueInput!]
+  set: [PositionWhereUniqueInput!]
+}
+
+input PositionWhereInput {
+  coordinates: StringFilter
+  createdAt: DateTimeFilter
+  id: StringFilter
+  trip: TripWhereUniqueInput
+  updatedAt: DateTimeFilter
+}
+
+input PositionWhereUniqueInput {
+  id: String!
+}
+
+type Query {
+  _categoriesMeta(where: CategoryWhereInput): MetaQueryPayload!
+  _eventsMeta(where: EventWhereInput): MetaQueryPayload!
+  _invitationsMeta(where: InvitationWhereInput): MetaQueryPayload!
+  _placesMeta(where: PlaceWhereInput): MetaQueryPayload!
+  _positionsMeta(where: PositionWhereInput): MetaQueryPayload!
+  _tripsMeta(where: TripWhereInput): MetaQueryPayload!
+  _usersMeta(where: UserWhereInput): MetaQueryPayload!
+  categories(orderBy: [CategoryOrderByInput!], skip: Float, take: Float, where: CategoryWhereInput): [Category!]!
+  category(where: CategoryWhereUniqueInput!): Category
+  event(where: EventWhereUniqueInput!): Event
+  events(orderBy: [EventOrderByInput!], skip: Float, take: Float, where: EventWhereInput): [Event!]!
+  invitation(where: InvitationWhereUniqueInput!): Invitation
+  invitations(orderBy: [InvitationOrderByInput!], skip: Float, take: Float, where: InvitationWhereInput): [Invitation!]!
+  place(where: PlaceWhereUniqueInput!): Place
+  places(orderBy: [PlaceOrderByInput!], skip: Float, take: Float, where: PlaceWhereInput): [Place!]!
+  position(where: PositionWhereUniqueInput!): Position
+  positions(orderBy: [PositionOrderByInput!], skip: Float, take: Float, where: PositionWhereInput): [Position!]!
+  trip(where: TripWhereUniqueInput!): Trip
+  trips(orderBy: [TripOrderByInput!], skip: Float, take: Float, where: TripWhereInput): [Trip!]!
+  user(where: UserWhereUniqueInput!): User
+  userInfo: UserInfo!
+  users(orderBy: [UserOrderByInput!], skip: Float, take: Float, where: UserWhereInput): [User!]!
+}
+
+enum QueryMode {
+  Default
+  Insensitive
+}
+
+enum SortOrder {
+  Asc
+  Desc
+}
+
+input StringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: String
+  notIn: [String!]
+  startsWith: String
+}
+
+input StringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: String
+  notIn: [String!]
+  startsWith: String
+}
+
+type Trip {
+  createdAt: DateTime!
+  day: DateTime!
+  id: String!
+  positions(orderBy: [PositionOrderByInput!], skip: Float, take: Float, where: PositionWhereInput): [Position!]!
+  updatedAt: DateTime!
+  user: User
+}
+
+input TripCreateInput {
+  day: DateTime!
+  positions: PositionCreateNestedManyWithoutTripsInput
+  user: UserWhereUniqueInput!
+}
+
+input TripCreateNestedManyWithoutUsersInput {
+  connect: [TripWhereUniqueInput!]
+}
+
+input TripListRelationFilter {
+  every: TripWhereInput
+  none: TripWhereInput
+  some: TripWhereInput
+}
+
+input TripOrderByInput {
+  createdAt: SortOrder
+  day: SortOrder
+  id: SortOrder
+  updatedAt: SortOrder
+  userId: SortOrder
+}
+
+input TripUpdateInput {
+  day: DateTime
+  positions: PositionUpdateManyWithoutTripsInput
+  user: UserWhereUniqueInput
+}
+
+input TripUpdateManyWithoutUsersInput {
+  connect: [TripWhereUniqueInput!]
+  disconnect: [TripWhereUniqueInput!]
+  set: [TripWhereUniqueInput!]
+}
+
+input TripWhereInput {
+  day: DateTimeFilter
+  id: StringFilter
+  positions: PositionListRelationFilter
+  user: UserWhereUniqueInput
+}
+
+input TripWhereUniqueInput {
+  id: String!
+}
+
+type User {
+  attendedEvents(orderBy: [EventOrderByInput!], skip: Float, take: Float, where: EventWhereInput): [Event!]!
+  avatar: String
+  createdAt: DateTime!
+  email: String!
+  id: String!
+  ownedEvents(orderBy: [EventOrderByInput!], skip: Float, take: Float, where: EventWhereInput): [Event!]!
+  receivedInvitations(orderBy: [InvitationOrderByInput!], skip: Float, take: Float, where: InvitationWhereInput): [Invitation!]!
+  roles: JSON!
+  sentInvitations(orderBy: [InvitationOrderByInput!], skip: Float, take: Float, where: InvitationWhereInput): [Invitation!]!
+  trips(orderBy: [TripOrderByInput!], skip: Float, take: Float, where: TripWhereInput): [Trip!]!
+  updatedAt: DateTime!
+  username: String!
+}
+
+input UserCreateInput {
+  attendedEvents: EventCreateNestedManyWithoutUsersInput
+  avatar: String
+  email: String!
+  ownedEvents: EventCreateNestedManyWithoutUsersInput
+  password: String!
+  receivedInvitations: InvitationCreateNestedManyWithoutUsersInput
+  roles: JSON!
+  sentInvitations: InvitationCreateNestedManyWithoutUsersInput
+  trips: TripCreateNestedManyWithoutUsersInput
+  username: String!
+}
+
+input UserCreateNestedManyWithoutEventsInput {
+  connect: [UserWhereUniqueInput!]
+}
+
+type UserInfo {
+  accessToken: String
+  id: String!
+  roles: [String!]!
+  username: String!
+}
+
+input UserListRelationFilter {
+  every: UserWhereInput
+  none: UserWhereInput
+  some: UserWhereInput
+}
+
+input UserOrderByInput {
+  avatar: SortOrder
+  createdAt: SortOrder
+  email: SortOrder
+  id: SortOrder
+  password: SortOrder
+  roles: SortOrder
+  updatedAt: SortOrder
+  username: SortOrder
+}
+
+input UserUpdateInput {
+  attendedEvents: EventUpdateManyWithoutUsersInput
+  avatar: String
+  email: String
+  ownedEvents: EventUpdateManyWithoutUsersInput
+  password: String
+  receivedInvitations: InvitationUpdateManyWithoutUsersInput
+  roles: JSON
+  sentInvitations: InvitationUpdateManyWithoutUsersInput
+  trips: TripUpdateManyWithoutUsersInput
+  username: String
+}
+
+input UserUpdateManyWithoutEventsInput {
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+}
+
+input UserWhereInput {
+  attendedEvents: EventListRelationFilter
+  avatar: StringNullableFilter
+  createdAt: DateTimeFilter
+  email: StringFilter
+  id: StringFilter
+  ownedEvents: EventListRelationFilter
+  receivedInvitations: InvitationListRelationFilter
+  sentInvitations: InvitationListRelationFilter
+  trips: TripListRelationFilter
+  updatedAt: DateTimeFilter
+  username: StringFilter
+}
+
+input UserWhereUniqueInput {
+  id: String!
+}

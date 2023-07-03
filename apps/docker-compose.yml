@@ -1,0 +1,10 @@
+version: '3.1'
+services:
+  web-admin:
+    build: ./web-admin
+    restart: always
+    hostname: web-admin
+    container_name: web-admin
+    ports:
+      - "3000:3000"
+
