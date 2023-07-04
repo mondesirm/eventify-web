@@ -1,0 +1,143 @@
+version: '3.1'
+services:
+  gateway:
+    build: ./apps/analytics-app/gateway
+    restart: always
+    hostname: gateway
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    networks:
+      - backend
+      - frontend
+  analytic:
+    build: ./apps/analytics-app/analytic
+    restart: always
+    hostname: analytic
+    env_file:
+      - .env
+    networks:
+      - backend
+    links:
+      - db-microservice
+  event:
+    build: ./apps/analytics-app/event
+    restart: always
+    hostname: event
+    env_file:
+      - .env
+    networks:
+      - backend
+    links:
+      - db-microservice
+  token:
+    build: ./apps/analytics-app/token
+    restart: always
+    hostname: token
+    env_file:
+      - .env
+    networks:
+      - backend
+    links:
+      - db-microservice
+  mailer:
+    build: ./apps/analytics-app/mailer
+    restart: always
+    hostname: mailer
+    env_file:
+      - .env
+    networks:
+      - backend
+  permission:
+    build: ./apps/analytics-app/permission
+    restart: always
+    hostname: permission
+    env_file:
+      - .env
+    networks:
+      - backend
+  user:
+    build: ./apps/analytics-app/user
+    restart: always
+    hostname: user
+    env_file:
+      - .env
+    networks:
+      - backend
+    links:
+      - mailer
+      - db-microservice       
+  db-microservice:
+    image: 'mongo:3.7'
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
+      MONGO_USER: ${MONGO_USER}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - "./apps/analytics-app/db/init/:/docker-entrypoint-initdb.d/"
+    ports:
+      - 27017:27017
+    networks:
+      - backend
+  web-admin:
+    build: ./apps/web-admin
+    restart: always
+    hostname: web-admin
+    ports:
+      - "3001:3001"
+  server:
+    build:
+      context: ./apps/web
+      args:
+        NPM_LOG_LEVEL: notice
+    ports:
+      - ${PORT}:3000
+    environment:
+      BCRYPT_SALT: ${BCRYPT_SALT}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      JWT_EXPIRATION: ${JWT_EXPIRATION}
+      DB_URL: postgres://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
+    depends_on:
+      - migrate
+  migrate:
+    build:
+      context: ./apps/web
+      args:
+        NPM_LOG_LEVEL: notice
+    command: npm run db:init
+    working_dir: /app/server
+    environment:
+      BCRYPT_SALT: ${BCRYPT_SALT}
+      DB_URL: postgres://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: postgres:12
+    ports:
+      - ${DB_PORT}:5432
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}
+      timeout: 45s
+      interval: 10s
+      retries: 10
+volumes:
+  postgres: ~
+networks:
+  backend:
+    driver: bridge
+  frontend:
+    external:
+      name: infrastructure
