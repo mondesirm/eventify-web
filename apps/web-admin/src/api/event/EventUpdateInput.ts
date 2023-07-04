@@ -3,6 +3,7 @@ import { CategoryWhereUniqueInput } from "../category/CategoryWhereUniqueInput";
 import { InvitationUpdateManyWithoutEventsInput } from "./InvitationUpdateManyWithoutEventsInput";
 import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
 import { PlaceWhereUniqueInput } from "../place/PlaceWhereUniqueInput";
+import { User } from "../user/User";
 
 export type EventUpdateInput = {
   attendees?: UserUpdateManyWithoutEventsInput;
@@ -15,4 +16,5 @@ export type EventUpdateInput = {
   place?: PlaceWhereUniqueInput | null;
   title?: string;
   visibility?: "public" | "friends" | "unlisted";
+  sam?: User | null;
 };

@@ -1,4 +1,6 @@
 import * as React from "react";
+import { Button } from "@material-ui/core";
+import axios from 'axios';
 
 import {
   Show,
@@ -17,6 +19,15 @@ import { CATEGORY_TITLE_FIELD } from "../category/CategoryTitle";
 import { PLACE_TITLE_FIELD } from "../place/PlaceTitle";
 
 export const EventShow = (props: ShowProps): React.ReactElement => {
+  const handleProposeAsSam = async () => {
+    try {
+      await axios({ method: 'post', url:`/events/:eventId/propose-sam`});
+    } catch (error) {
+      console.log('Error while proposing as Sam', error);
+      alert('An error occured while proposing as Sam');
+    }
+  };
+
   return (
     <Show {...props}>
       <SimpleShowLayout>
@@ -62,6 +73,12 @@ export const EventShow = (props: ShowProps): React.ReactElement => {
             <DateField source="updatedAt" label="Updated At" />
           </Datagrid>
         </ReferenceManyField>
+        <Button
+              type="button"
+              variant="contained"
+              onClick={handleProposeAsSam}>
+              Propose as Sam
+            </Button>
       </SimpleShowLayout>
     </Show>
   );

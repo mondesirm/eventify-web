@@ -22,4 +22,5 @@ export type EventWhereInput = {
   title?: StringFilter;
   updatedAt?: DateTimeFilter;
   visibility?: "public" | "friends" | "unlisted";
+  sam?: UserWhereUniqueInput;
 };

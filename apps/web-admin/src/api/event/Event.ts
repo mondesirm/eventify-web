@@ -17,4 +17,5 @@ export type Event = {
   title: string;
   updatedAt: Date;
   visibility?: "public" | "friends" | "unlisted";
+  sam?: User | null;
 };

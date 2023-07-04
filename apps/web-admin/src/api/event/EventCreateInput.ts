@@ -15,4 +15,5 @@ export type EventCreateInput = {
   place?: PlaceWhereUniqueInput | null;
   title: string;
   visibility: "public" | "friends" | "unlisted";
+  sam?: UserWhereUniqueInput | null;
 };
