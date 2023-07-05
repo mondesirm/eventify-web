@@ -5,8 +5,8 @@ export interface IVisitor extends Document {
     visitorId: string;
     ipAddress: string;
     userAgent: string;
-    browserInfo: any;
-    deviceInfo: any;
-    performanceInfo: any;
-    locationInfo: any;
+    browserInfo: Object;
+    deviceInfo: Object;
+    performanceInfo: Object;
+    locationInfo: Object;
   }

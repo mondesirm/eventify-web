@@ -10,8 +10,8 @@ export class GetErrorsResponseDto {
         {
           message: 'Uncaught ReferenceError: a is not defined',
           source: 'http://localhost:3000/',
-          lineno: 1,
-          colno: 1,
+          lineNo: 1,
+          colNo: 1,
           error: null,
           timestamp: '2021-08-02T08:00:00.000Z',
           visitorId: '1',

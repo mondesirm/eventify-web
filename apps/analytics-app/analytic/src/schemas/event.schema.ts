@@ -20,7 +20,7 @@ export const EventSchema = new mongoose.Schema(
             required: [true, 'VisitorId can not be empty'],
         },
         eventTime: {
-            type: Number,
+            type: String,
             required: [true, 'EventTime can not be empty'],
         },
     },

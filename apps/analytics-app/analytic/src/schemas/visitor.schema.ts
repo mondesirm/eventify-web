@@ -20,16 +20,16 @@ export const VisitorSchema = new mongoose.Schema(
             required: [true, 'UserAgent can not be empty'],
         },
         browserInfo: {
-            type: String,
+            type: Object,
         },
         deviceInfo: {
-            type: String,
+            type: Object,
         },
         performanceInfo: {
-            type: String,
+            type: Object,
         },
         locationInfo: {
-            type: String,
+            type: Object,
         },
 
     },

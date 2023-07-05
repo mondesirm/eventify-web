@@ -6,9 +6,9 @@ export class UpdateErrorDto {
   @ApiProperty({ example: 'http://localhost:3000/' })
   source: string;
   @ApiProperty({ example: 1 })
-  lineno: number;
+  lineNo: number;
   @ApiProperty({ example: 1 })
-  colno: number;
+  colNo: number;
   @ApiProperty({ example: null })
   error: string | null;
   @ApiProperty({ example: '2021-08-02T08:00:00.000Z' })

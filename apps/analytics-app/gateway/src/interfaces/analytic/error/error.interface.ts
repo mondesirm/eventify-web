@@ -1,8 +1,8 @@
 export interface IError {
   message: string;
   source: string;
-  lineno: number;
-  colno: number;
+  lineNo: number;
+  colNo: number;
   error: string | null;
   timestamp: string;
   visitorId: string;

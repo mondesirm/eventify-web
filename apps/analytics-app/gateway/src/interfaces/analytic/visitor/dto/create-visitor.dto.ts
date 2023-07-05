@@ -11,14 +11,14 @@ export class CreateVisitorDto {
   userAgent: string;
 
   @ApiProperty({ description: "Visitor's Browser Info", example: { name: 'Chrome', version: '93.0.4577.82', major: '93' } })
-  browserInfo: any;
+  browserInfo: Object;
 
   @ApiProperty({ description: "Visitor's Device Info", example: { vendor: 'Google', model: 'Chrome', type: 'desktop' } })
-  deviceInfo: any;
+  deviceInfo: Object;
 
   @ApiProperty({ description: "Visitor's Performance Info", example: { loadTime: 2300, redirectTime: 100, dnsTime: 30, tcpTime: 50, requestTime: 400, responseTime: 700, domLoadingTime: 1500, domInteractiveTime: 1700, domContentLoadedTime: 2000, domCompleteTime: 2300 } })
-  performanceInfo: any;
+  performanceInfo: Object;
 
   @ApiProperty({ description: "Visitor's Location Info", example: { country: 'United States', region: 'California', city: 'Los Angeles', latitude: 34.0522, longitude: -118.2437 } })
-  locationInfo: any;
+  locationInfo: Object;
 }

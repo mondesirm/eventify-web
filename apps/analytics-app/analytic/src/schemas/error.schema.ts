@@ -7,7 +7,7 @@ function transformValue(doc, ret: { [key: string]: any }) {
 
 export const ErrorSchema = new mongoose.Schema(
     {
-        errorMessage: {
+        message: {
             type: String,
             required: [true, 'ErrorMessage can not be empty'],
         },
@@ -27,7 +27,7 @@ export const ErrorSchema = new mongoose.Schema(
             type: Number,
         },
         timestamp: {
-            type: Number,
+            type: String,
             required: [true, 'Timestamp can not be empty'],
         },
         visitorId: {
