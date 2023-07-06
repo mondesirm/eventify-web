@@ -40,7 +40,7 @@ export class AnalyticErrorsController {
     @Inject('ANALYTIC_SERVICE') private readonly analyticServiceClient: ClientProxy,
   ) { }
 
-  @Get()
+  @Get("/visitor/:id")
   @Authorization(true)
   @ApiBearerAuth()
   @ApiOkResponse({
@@ -72,7 +72,7 @@ export class AnalyticErrorsController {
   @ApiBearerAuth()
   @ApiOkResponse({
     type: GetErrorsResponseDto,
-    description: 'List of errors for a visitor',
+    description: 'List of errors',
   })
   public async getErrors(
     @Req() request: IAuthorizedRequest
@@ -81,7 +81,7 @@ export class AnalyticErrorsController {
 
     const errorsResponse: IServiceErrorGetAllResponse =
       await firstValueFrom(
-        this.analyticServiceClient.send('error_get_all', null),
+        this.analyticServiceClient.send('error_get_all', {}),
       );
 
     return {

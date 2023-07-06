@@ -8,6 +8,7 @@ import { IEventSearchByUserResponse } from '../interfaces/event/event-search-by-
 import { IEventDeleteResponse } from '../interfaces/event/event-delete-response.interface';
 import { IEventCreateResponse } from '../interfaces/event/event-create-response.interface';
 import { IEventUpdateByIdResponse } from '../interfaces/event/event-update-by-id-response.interface';
+import { IEventGetAllResponse } from '../interfaces/event/event-get-all-response.interface';
 
 @Controller()
 export class EventController {
@@ -33,6 +34,21 @@ export class EventController {
         events: null,
       };
     }
+
+    return result;
+  }
+
+  @MessagePattern('event_get_all')
+  public async eventGetALL(
+  ): Promise<IEventGetAllResponse> {
+    let result: IEventGetAllResponse;
+
+      const events = await this.eventService.getEvents();
+      result = {
+        status: HttpStatus.OK,
+        message: 'event_get_all_success',
+        events,
+      };
 
     return result;
   }

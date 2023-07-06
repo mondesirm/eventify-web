@@ -30,6 +30,8 @@ import { CreateVisitorDto } from '../../interfaces/analytic/visitor/dto/create-v
 import { UpdateVisitorDto } from '../../interfaces/analytic/visitor/dto/update-visitor.dto';
 import { VisitorIdDto } from '../../interfaces/analytic/visitor/dto/visitor-id.dto';
 import { IIDVisitor } from '../../interfaces/analytic/visitor/visitor-id.interface';
+import { IServiceVisitorGetAllResponse } from '../../interfaces/analytic/visitor/service-analytic-visitor-get-all-response.interface';
+
 
 @Controller('visitors')
 @ApiTags('visitors')
@@ -38,13 +40,13 @@ export class AnalyticVisitorsController {
     @Inject('ANALYTIC_SERVICE') private readonly analyticServiceClient: ClientProxy,
   ) { }
 
-  @Get()
+  @Get("/:id")
   @Authorization(true)
   @ApiOkResponse({
     type: GetVisitorsResponseDto,
     description: 'List of visitors for a visitor',
   })
-  public async getVisitors(
+  public async getVisitorById(
     @Req() request: IAuthorizedRequest,
     @Body() visitorIDRequest: IIDVisitor,
   ): Promise<GetVisitorsResponseDto> {
@@ -53,6 +55,31 @@ export class AnalyticVisitorsController {
     const visitorsResponse: IServiceVisitorSearchByUserIdResponse =
       await firstValueFrom(
         this.analyticServiceClient.send('visitor_search_by_visitor_id', visitorIDRequest),
+      );
+
+    return {
+      message: visitorsResponse.message,
+      data: {
+        visitors: visitorsResponse.visitors,
+      },
+      errors: null,
+    };
+  }
+
+  @Get()
+  @Authorization(true)
+  @ApiOkResponse({
+    type: GetVisitorsResponseDto,
+    description: 'List of visitors',
+  })
+  public async getVisitors(
+    @Req() request: IAuthorizedRequest,
+  ): Promise<GetVisitorsResponseDto> {
+    const userInfo = request.user;
+
+    const visitorsResponse: IServiceVisitorGetAllResponse =
+      await firstValueFrom(
+        this.analyticServiceClient.send('visitor_get_all', {}),
       );
 
     return {
