@@ -8,6 +8,7 @@ import { IVisitorSearchByUserResponse } from '../interfaces/visitor/visitor-sear
 import { IVisitorDeleteResponse } from '../interfaces/visitor/visitor-delete-response.interface';
 import { IVisitorCreateResponse } from '../interfaces/visitor/visitor-create-response.interface';
 import { IVisitorUpdateByIdResponse } from '../interfaces/visitor/visitor-update-by-id-response.interface';
+import { IVisitorGetAllResponse } from '../interfaces/visitor/visitor-get-all-response.interface';
 
 @Controller()
 export class VisitorController {
@@ -36,6 +37,22 @@ export class VisitorController {
 
     return result;
   }
+
+  @MessagePattern('visitor_get_all')
+  public async visitorGetALL(
+  ): Promise<IVisitorGetAllResponse> {
+    let result: IVisitorGetAllResponse;
+
+    const visitors = await this.visitorService.getVisitors();
+    result = {
+      status: HttpStatus.OK,
+      message: 'visitor_get_all_success',
+      visitors,
+    };
+
+    return result;
+  }
+
 
   @MessagePattern('visitor_update_by_id')
   public async visitorUpdateById(params: {

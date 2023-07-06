@@ -12,6 +12,10 @@ export class VisitorService {
         return this.visitorModel.find({ visitorID: visitorID }).exec();
     }
 
+    public async getVisitors(): Promise<IVisitor[]> {
+        return this.visitorModel.find().exec();
+    }
+
     public async createVisitor(visitorBody: IVisitor): Promise<IVisitor> {
         const visitorModel = new this.visitorModel(visitorBody);
         return await visitorModel.save();
