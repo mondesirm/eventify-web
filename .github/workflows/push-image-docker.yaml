@@ -22,13 +22,37 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push Docker images
+      - name: Build and push Docker images - server
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ./apps/web
           push: true
           tags: |
-           ${{ secrets.DOCKER_USERNAME }}/gateway:latest
+            ${{ secrets.DOCKER_USERNAME }}/server:latest
+
+      - name: Build and push Docker images - migrate
+        uses: docker/build-push-action@v2
+        with:
+          context: ./apps/web
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/migrate:latest
+
+      - name: Build and push Docker images - web-admin
+        uses: docker/build-push-action@v2
+        with:
+          context: ./apps/web-admin
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/web-admin:latest
+
+      - name: Build and push Docker images - analytics-app
+        uses: docker/build-push-action@v2
+        with:
+          context: ./apps/analytics-app
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/gateway:latest
             ${{ secrets.DOCKER_USERNAME }}/analytic:latest
             ${{ secrets.DOCKER_USERNAME }}/event:latest
             ${{ secrets.DOCKER_USERNAME }}/token:latest
@@ -36,7 +60,3 @@ jobs:
             ${{ secrets.DOCKER_USERNAME }}/permission:latest
             ${{ secrets.DOCKER_USERNAME }}/user:latest
             ${{ secrets.DOCKER_USERNAME }}/frontend-analytics:latest
-            ${{ secrets.DOCKER_USERNAME }}/web-admin:latest
-            ${{ secrets.DOCKER_USERNAME }}/server:latest
-            ${{ secrets.DOCKER_USERNAME }}/migrate:latest
-            ${{ secrets.DOCKER_USERNAME }}/db:latest
