@@ -46,17 +46,58 @@ jobs:
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/web-admin:latest
 
-      - name: Build and push Docker images - analytics-app
+      - name: Build and push Docker images - gateway
         uses: docker/build-push-action@v2
         with:
-          context: ./apps/analytics-app
+          context: ./apps/analytics-app/gateway
           push: true
-          tags: |
-            ${{ secrets.DOCKER_USERNAME }}/gateway:latest
-            ${{ secrets.DOCKER_USERNAME }}/analytic:latest
-            ${{ secrets.DOCKER_USERNAME }}/event:latest
-            ${{ secrets.DOCKER_USERNAME }}/token:latest
-            ${{ secrets.DOCKER_USERNAME }}/mailer:latest
-            ${{ secrets.DOCKER_USERNAME }}/permission:latest
-            ${{ secrets.DOCKER_USERNAME }}/user:latest
-            ${{ secrets.DOCKER_USERNAME }}/frontend-analytics:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/gateway:latest
+
+      - name: Build and push Docker images - analytic
+        uses: docker/build-push-action@v2
+        with:
+          context: ./apps/analytics-app/analytic
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/analytic:latest
+
+      - name: Build and push Docker images - event
+        uses: docker/build-push-action@v2
+        with:
+          context: ./apps/analytics-app/event
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/event:latest
+
+      - name: Build and push Docker images - token
+        uses: docker/build-push-action@v2
+        with:
+          context: ./apps/analytics-app/token
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/token:latest
+
+      - name: Build and push Docker images - mailer
+        uses: docker/build-push-action@v2
+        with:
+          context: ./apps/analytics-app/mailer
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/mailer:latest
+
+      - name: Build and push Docker images - permission
+        uses: docker/build-push-action@v2
+        with:
+          context: ./apps/analytics-app/permission
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/permission:latest
+
+      - name: Build and push Docker images - user
+        uses: docker/build-push-action@v2
+        with:
+          context: ./apps/analytics-app/user
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/user:latest
+
+      - name: Build and push Docker images - frontend-analytics
+        uses: docker/build-push-action@v2
+        with:
+          context: ./apps/analytics-app/front
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/frontend-analytics:latest

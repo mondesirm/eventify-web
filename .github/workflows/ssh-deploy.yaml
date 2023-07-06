@@ -21,6 +21,23 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           port: 22
 
+      - name: Create env file
+        run: |
+          touch .env
+          echo "MONGO_ROOT_USER=${{secrets.MONGO_ROOT_USER}}" >> .env
+          echo "MONGO_ROOT_PASSWORD=${{secrets.MONGO_ROOT_PASSWORD}}" >> .env
+          echo "MONGO_DATABASE=${{secrets.MONGO_DATABASE}}" >> .env
+          echo "MONGO_USER=${{secrets.MONGO_USER}}" >> .env
+          echo "MONGO_PASSWORD=${{secrets.MONGO_PASSWORD}}" >> .env
+          echo "PORT=${{secrets.PORT}}" >> .env
+          echo "BCRYPT_SALT=${{secrets.BCRYPT_SALT}}" >> .env
+          echo "JWT_SECRET_KEY=${{secrets.JWT_SECRET_KEY}}" >> .env
+          echo "JWT_EXPIRATION=${{secrets.JWT_EXPIRATION}}" >> .env
+          echo "DB_USER=${{secrets.DB_USER}}" >> .env
+          echo "DB_PASSWORD=${{secrets.DB_PASSWORD}}" >> .env
+          echo "DB_NAME=${{secrets.DB_NAME}}" >> .env
+          echo "DB_PORT=${{secrets.DB_PORT}}" >> .env
+
       - name: Create Docker network
         run: docker network create infrastructure
 
