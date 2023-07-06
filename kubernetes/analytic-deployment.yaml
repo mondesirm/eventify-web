@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: analytic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: analytic
+  template:
+    metadata:
+      labels:
+        app: analytic
+    spec:
+      containers:
+        - name: analytic
+          image: $(DOCKER_NAMESPACE)/analytic:latest

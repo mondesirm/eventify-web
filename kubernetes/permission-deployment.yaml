@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: permission
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: permission
+  template:
+    metadata:
+      labels:
+        app: permission
+    spec:
+      containers:
+        - name: permission
+          image: $(DOCKER_NAMESPACE)/permission:latest

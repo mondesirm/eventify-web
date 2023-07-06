@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-analytics-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-analytics
+  template:
+    metadata:
+      labels:
+        app: frontend-analytics
+    spec:
+      containers:
+        - name: frontend-analytics
+          image: $(DOCKER_NAMESPACE)/frontend-analytics:latest
+          ports:
+            - containerPort: 8007
+          env:
+            - name: <FRONTEND_ANALYTICS_PORT>
+              value: $(FRONTEND_ANALYTICS_PORT)

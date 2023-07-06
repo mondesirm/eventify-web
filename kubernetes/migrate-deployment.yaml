@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: migrate-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: migrate
+  template:
+    metadata:
+      labels:
+        app: migrate
+    spec:
+      containers:
+        - name: migrate
+          image: $(DOCKER_NAMESPACE)/migrate:latest
+          command: ["npm", "run", "db:init"]
+          workingDir: /app/server
+          env:
+            - name: BCRYPT_SALT
+              value: $(BCRYPT_SALT_VALUE)
+            - name: DB_URL
+              value: postgres://$(DB_USER):$(DB_PASSWORD)@db:5432/$(DB_NAME)
+          dependsOn:
+            - condition: service_healthy
+              name: db

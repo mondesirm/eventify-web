@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: token
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: token
+  template:
+    metadata:
+      labels:
+        app: token
+    spec:
+      containers:
+        - name: token
+          image: $(DOCKER_NAMESPACE)/token:latest
