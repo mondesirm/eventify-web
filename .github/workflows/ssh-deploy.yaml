@@ -25,7 +25,7 @@ jobs:
         run: docker network create infrastructure
 
       - name: Build Docker image
-        run: docker build
+        run: docker-compose build
 
       - name: Start Docker containers
         run: docker-compose up -d
