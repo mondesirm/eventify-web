@@ -8,6 +8,7 @@ import { IErrorSearchByUserResponse } from '../interfaces/error/error-search-by-
 import { IErrorDeleteResponse } from '../interfaces/error/error-delete-response.interface';
 import { IErrorCreateResponse } from '../interfaces/error/error-create-response.interface';
 import { IErrorUpdateByIdResponse } from '../interfaces/error/error-update-by-id-response.interface';
+import { IErrorGetAllResponse } from '../interfaces/error/error-get-all-response.interface';
 
 @Controller()
 export class ErrorController {
@@ -30,6 +31,30 @@ export class ErrorController {
       result = {
         status: HttpStatus.BAD_REQUEST,
         message: 'error_search_by_visitor_id_bad_request',
+        errors: null,
+      };
+    }
+
+    return result;
+  }
+
+  @MessagePattern('error_get_all')
+  public async errorGetALL(
+    userId: string,
+  ): Promise<IErrorGetAllResponse> {
+    let result: IErrorGetAllResponse;
+
+    if (userId) {
+      const errors = await this.errorService.getErrors();
+      result = {
+        status: HttpStatus.OK,
+        message: 'error_get_all_success',
+        errors,
+      };
+    } else {
+      result = {
+        status: HttpStatus.BAD_REQUEST,
+        message: 'error_get_all_bad_request',
         errors: null,
       };
     }

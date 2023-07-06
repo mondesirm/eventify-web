@@ -21,6 +21,7 @@ import { IAuthorizedRequest } from '../../interfaces/common/authorized-request.i
 import { IServiceErrorCreateResponse } from '../../interfaces/analytic/error/service-analytic-error-create-response.interface';
 import { IServiceErrorDeleteResponse } from '../../interfaces/analytic/error/service-analytic-error-delete-response.interface';
 import { IServiceErrorSearchByUserIdResponse } from '../../interfaces/analytic/error/service-analytic-error-search-by-user-id-response.interface';
+import { IServiceErrorGetAllResponse } from '../../interfaces/analytic/error/service-analytic-error-get-all-response.interface';
 import { IServiceErrorUpdateByIdResponse } from '../../interfaces/analytic/error/service-analytic-error-update-by-id-response.interface';
 import { GetErrorsResponseDto } from '../../interfaces/analytic/error/dto/get-errors-response.dto';
 import { CreateErrorResponseDto } from '../../interfaces/analytic/error/dto/create-error-response.dto';
@@ -46,7 +47,7 @@ export class AnalyticErrorsController {
     type: GetErrorsResponseDto,
     description: 'List of errors for a visitor',
   })
-  public async getErrors(
+  public async getErrorsByVisitorId(
     @Req() request: IAuthorizedRequest,
     @Body() visitorIDRequest: IIDVisitor,
   ): Promise<GetErrorsResponseDto> {
@@ -55,6 +56,32 @@ export class AnalyticErrorsController {
     const errorsResponse: IServiceErrorSearchByUserIdResponse =
       await firstValueFrom(
         this.analyticServiceClient.send('error_search_by_visitor_id', visitorIDRequest),
+      );
+
+    return {
+      message: errorsResponse.message,
+      data: {
+        errors: errorsResponse.errors,
+      },
+      errors: null,
+    };
+  }
+
+  @Get()
+  @Authorization(true)
+  @ApiBearerAuth()
+  @ApiOkResponse({
+    type: GetErrorsResponseDto,
+    description: 'List of errors for a visitor',
+  })
+  public async getErrors(
+    @Req() request: IAuthorizedRequest
+  ): Promise<GetErrorsResponseDto> {
+    const userInfo = request.user;
+
+    const errorsResponse: IServiceErrorGetAllResponse =
+      await firstValueFrom(
+        this.analyticServiceClient.send('error_get_all', null),
       );
 
     return {

@@ -12,6 +12,10 @@ export class ErrorService {
         return this.errorModel.find({ visitorID: visitorID }).exec();
     }
 
+    public async getErrors(): Promise<IError[]> {
+        return this.errorModel.find().exec();
+    }
+
     public async createError(eventBody: IError): Promise<IError> {
         const errorModel = new this.errorModel(eventBody);
         return await errorModel.save();

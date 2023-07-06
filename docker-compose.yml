@@ -83,6 +83,12 @@ services:
       - 27017:27017
     networks:
       - backend
+  frontend-analytics:
+    build: ./apps/analytics-app/front
+    restart: always
+    hostname: frontend-analytics
+    ports:
+      - 8007:8007
   web-admin:
     build: ./apps/web-admin
     restart: always
