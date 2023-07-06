@@ -30,7 +30,7 @@ import { CreateEventDto } from '../../interfaces/analytic/event/dto/create-event
 import { UpdateEventDto } from '../../interfaces/analytic/event/dto/update-event.dto';
 import { EventIdDto } from '../../interfaces/analytic/event/dto/event-id.dto';
 import { IIDVisitor } from '../../interfaces/analytic/visitor/visitor-id.interface';
-
+import { IServiceEventGetAllResponse } from '../../interfaces/analytic/event/service-analytic-event-get-all-response.interface';
 
 @Controller('events')
 @ApiTags('events')
@@ -39,14 +39,14 @@ export class AnalyticEventsController {
     @Inject('ANALYTIC_SERVICE') private readonly analyticServiceClient: ClientProxy,
   ) { }
 
-  @Get()
+  @Get("/visitor/:id")
   @Authorization(true)
   @ApiBearerAuth()
   @ApiOkResponse({
     type: GetEventsResponseDto,
     description: 'List of events for a visitor',
   })
-  public async getEvents(
+  public async getEventsByVisitorId(
     @Req() request: IAuthorizedRequest,
     @Body() visitorIDRequest: IIDVisitor,
   ): Promise<GetEventsResponseDto> {
@@ -55,6 +55,32 @@ export class AnalyticEventsController {
     const eventsResponse: IServiceEventSearchByUserIdResponse =
       await firstValueFrom(
         this.analyticServiceClient.send('event_search_by_visitor_id', visitorIDRequest),
+      );
+
+    return {
+      message: eventsResponse.message,
+      data: {
+        events: eventsResponse.events,
+      },
+      errors: null,
+    };
+  }
+
+  @Get()
+  @Authorization(true)
+  @ApiBearerAuth()
+  @ApiOkResponse({
+    type: GetEventsResponseDto,
+    description: 'List of events',
+  })
+  public async getEvents(
+    @Req() request: IAuthorizedRequest
+  ): Promise<GetEventsResponseDto> {
+    const userInfo = request.user;
+
+    const eventsResponse: IServiceEventGetAllResponse =
+      await firstValueFrom(
+        this.analyticServiceClient.send('event_get_all', {}),
       );
 
     return {

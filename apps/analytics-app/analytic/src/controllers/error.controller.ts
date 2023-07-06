@@ -40,24 +40,15 @@ export class ErrorController {
 
   @MessagePattern('error_get_all')
   public async errorGetALL(
-    userId: string,
   ): Promise<IErrorGetAllResponse> {
     let result: IErrorGetAllResponse;
 
-    if (userId) {
-      const errors = await this.errorService.getErrors();
-      result = {
-        status: HttpStatus.OK,
-        message: 'error_get_all_success',
-        errors,
-      };
-    } else {
-      result = {
-        status: HttpStatus.BAD_REQUEST,
-        message: 'error_get_all_bad_request',
-        errors: null,
-      };
-    }
+    const errors = await this.errorService.getErrors();
+    result = {
+      status: HttpStatus.OK,
+      message: 'error_get_all_success',
+      errors,
+    };
 
     return result;
   }

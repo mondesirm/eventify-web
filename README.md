@@ -1,5 +1,4 @@
-# This repository shows how you can build API with microservice architecture using nestjs
-## Features of this App
+# This repository use microservices for analytics and have nestJS API with an Admin Panel
 It provides a possibility to perform sign up users, confirm user's emails, manage user's events.
 ## Running the example with docker-compose
 Execute `docker network create infrastructure && cp .env.example .env && docker-compose up -d` from the root of the repository

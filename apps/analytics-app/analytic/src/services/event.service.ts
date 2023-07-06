@@ -12,6 +12,10 @@ export class EventService {
         return this.eventModel.find({ visitorID: visitorID }).exec();
     }
 
+    public async getEvents(): Promise<IEvent[]> {
+        return this.eventModel.find().exec();
+    }
+
     public async createEvent(eventBody: IEvent): Promise<IEvent> {
         const eventModel = new this.eventModel(eventBody);
         return await eventModel.save();

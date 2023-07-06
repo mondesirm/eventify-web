@@ -18,5 +18,5 @@ spec:
           ports:
             - containerPort: 8007
           env:
-            - name: <FRONTEND_ANALYTICS_PORT>
+            - name: FRONTEND_ANALYTICS_PORT
               value: $(FRONTEND_ANALYTICS_PORT)
